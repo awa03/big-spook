@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👻 The Haunted Archive 👻</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: #0a0a0a;
+            color: #b8b8b8;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Spooky background effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(75, 0, 130, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 0, 0, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #2a2a2a;
+            position: relative;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 8vw, 4rem);
+            color: #8b0000;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.5),
+                         0 0 40px rgba(139, 0, 0, 0.3);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            animation: flicker 3s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            color: #666;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        .content-section {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(139, 0, 0, 0.3);
+        }
+
+        h2 {
+            color: #9d4edd;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: clamp(0.95rem, 3vw, 1.1rem);
+        }
+
+        /* Feedback Form */
+        .feedback-form {
+            background: linear-gradient(135deg, rgba(30, 0, 50, 0.9), rgba(20, 0, 30, 0.9));
+            border: 2px solid #4a0e4e;
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feedback-form::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+
+        .form-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #b8b8b8;
+            margin-bottom: 8px;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid #4a0e4e;
+            border-radius: 8px;
+            color: #b8b8b8;
+            font-family: 'Georgia', serif;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #9d4edd;
+            box-shadow: 0 0 15px rgba(157, 78, 221, 0.3);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background: linear-gradient(135deg, #8b0000, #4a0e4e);
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+            width: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(157, 78, 221, 0.5);
+            background: linear-gradient(135deg, #a00000, #6a1e6e);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Ghost animations */
+        .ghost {
+            position: fixed;
+            font-size: clamp(30px, 8vw, 60px);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+            animation: float 3s ease-in-out;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            background: rgba(0, 100, 0, 0.2);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            color: #00ff00;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: clamp(0.85rem, 3vw, 0.95rem);
+            border-top: 1px solid #2a2a2a;
+            margin-top: 40px;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .feedback-form {
+                padding: 20px;
+            }
+
+            header {
+                padding: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👻 The Haunted Archive 👻</h1>
+            <p class="subtitle">Enter if you dare...</p>
+        </header>
+
+        <section class="content-section feedback-form">
+            <div class="form-content">
+                <h2>💀 Message Big Spook 💀</h2>
+                
+                <form id="spookyForm">
+                    <div class="form-group">
+                        <label for="name">Your Name (or alias):</label>
+                        <input type="text" id="name" name="name" placeholder="Anonymous Specter" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email (for the spirit realm):</label>
+                        <input type="email" id="email" name="email" placeholder="ghost@haunted.net">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message to Big Spook:</label>
+                        <textarea id="message" name="message" placeholder="Type your eerie message here..." required></textarea>
+                    </div>
+
+                    <button type="submit">🕯️ Send to the Void 🕯️</button>
+                </form>
+
+                <div class="success-message" id="successMessage">
+                    ✨ Your message has been received by Big Spook! ✨<br>
+                    The spirits are pleased...
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 The Haunted Archive | Forever in the shadows | Built with dark magic ✨</p>
+            <p style="margin-top: 10px;">May your code compile and your spirits rest in peace 👻</p>
+        </footer>
+    </div>
+
+    <script>
+        // Ghost spawn function
+        function spawnGhost() {
+            const ghost = document.createElement('div');
+            ghost.className = 'ghost';
+            ghost.textContent = ['👻', '🎃', '💀', '🕷️'][Math.floor(Math.random() * 4)];
+            ghost.style.left = Math.random() * 100 + '%';
+            ghost.style.bottom = '-60px';
+            document.body.appendChild(ghost);
+
+            setTimeout(() => {
+                ghost.remove();
+            }, 3000);
+        }
+
+        // Spawn ghosts randomly
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                spawnGhost();
+            }
+        }, 2000);
+
+        // Form submission handler
+        document.getElementById('spookyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Spawn multiple ghosts
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => spawnGhost(), i * 200);
+            }
+
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.style.display = 'block';
+
+            // Reset form
+            this.reset();
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 5000);
+
+            // Log the "submission" to console (since it's fake)
+            console.log('👻 Message sent to Big Spook! 👻');
+            console.log('Name:', document.getElementById('name').value || 'Anonymous');
+            console.log('Email:', document.getElementById('email').value || 'Not provided');
+            console.log('Message:', document.getElementById('message').value);
+        });
+
+        // Initial ghost spawn
+        setTimeout(() => spawnGhost(), 1000);
+    </script>
+</body>
+</html>
